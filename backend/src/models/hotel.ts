@@ -1,20 +1,20 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import { HotelType } from "../shared/types";
 
 const hotelSchema = new mongoose.Schema<HotelType>({
-  userId: { type: String, require: true },
-  name: { type: String, require: true },
-  city: { type: String, require: true },
-  country: { type: String, require: true },
-  description: { type: String, require: true },
-  type: { type: String, require: true },
-  adultCount: { type: Number, require: true },
-  childCount: { type: Number, require: true },
-  facilities: [{ type: String, require: true }],
-  pricePerNight: { type: Number, require: true },
-  starRating: { type: Number, require: true, min: 1, max: 5 },
-  imageUrls: [{ type: String, require: true }],
-  lastUpdated: { type: Date, require: true },
+  userId: { type: String, required: true },
+  name: { type: String, required: true },
+  city: { type: String, required: true },
+  country: { type: String, required: true },
+  description: { type: String, required: true },
+  type: { type: String, required: true },
+  adultCount: { type: Number, required: true },
+  childCount: { type: Number, required: true },
+  facilities: [{ type: String, required: true }],
+  pricePerNight: { type: Number, required: true },
+  starRating: { type: Number, required: true, min: 1, max: 5 },
+  imageUrls: [{ type: String, required: true }],
+  lastUpdated: { type: Date, required: true },
 });
 
 const Hotel = mongoose.model<HotelType>("Hotel", hotelSchema);

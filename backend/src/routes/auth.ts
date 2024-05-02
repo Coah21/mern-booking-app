@@ -3,7 +3,7 @@ import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import verifyToken from "../middlewares/auth";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
@@ -50,7 +50,7 @@ router.post(
       res.status(200).json({ userId: user._id });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Somthing went wrongs" });
+      res.status(500).json({ message: "Something went wrongs" });
     }
   }
 );

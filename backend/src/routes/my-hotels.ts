@@ -2,9 +2,9 @@ import express, { Request, Response } from "express";
 import multer from "multer";
 import cloudinary from "cloudinary";
 import Hotel from "../models/hotel";
-import { HotelType } from "../shared/types";
-import verifyToken from "../middlewares/auth";
+import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
+import { HotelType } from "../shared/types";
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ const upload = multer({
     fileSize: 5 * 1024 * 1024, // 5MB
   },
 });
-// api/my-hotels
+
 router.post(
   "/",
   verifyToken,
@@ -24,11 +24,11 @@ router.post(
     body("city").notEmpty().withMessage("City is required"),
     body("country").notEmpty().withMessage("Country is required"),
     body("description").notEmpty().withMessage("Description is required"),
-    body("type").notEmpty().withMessage("Type is required"),
+    body("type").notEmpty().withMessage("Hotel type is required"),
     body("pricePerNight")
       .notEmpty()
       .isNumeric()
-      .withMessage("Price Per Night is required and must be a number"),
+      .withMessage("Price per night is required and must be a number"),
     body("facilities")
       .notEmpty()
       .isArray()
@@ -48,9 +48,10 @@ router.post(
 
       const hotel = new Hotel(newHotel);
       await hotel.save();
+
       res.status(201).send(hotel);
     } catch (e) {
-      console.log("Error creating hotel: ", e);
+      console.log(e);
       res.status(500).json({ message: "Something went wrong" });
     }
   }
@@ -60,7 +61,7 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
   try {
     const hotels = await Hotel.find({ userId: req.userId });
     res.json(hotels);
-  } catch (e) {
+  } catch (error) {
     res.status(500).json({ message: "Error fetching hotels" });
   }
 });
@@ -73,7 +74,7 @@ router.get("/:id", verifyToken, async (req: Request, res: Response) => {
       userId: req.userId,
     });
     res.json(hotel);
-  } catch (e) {
+  } catch (error) {
     res.status(500).json({ message: "Error fetching hotels" });
   }
 });
@@ -110,8 +111,8 @@ router.put(
 
       await hotel.save();
       res.status(201).json(hotel);
-    } catch (e) {
-      res.status(500).json({ message: "Something went wrong" });
+    } catch (error) {
+      res.status(500).json({ message: "Something went throw" });
     }
   }
 );
