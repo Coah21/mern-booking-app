@@ -51,7 +51,7 @@ const Search = () => {
   ) => {
     const hotelType = event.target.value;
 
-    setSelectedFacilities((prevHotelTypes) =>
+    setSelectedHotelTypes((prevHotelTypes) =>
       event.target.checked
         ? [...prevHotelTypes, hotelType]
         : prevHotelTypes.filter((type) => type !== hotelType)
