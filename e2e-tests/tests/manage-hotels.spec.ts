@@ -28,22 +28,21 @@ test("should allow user to add a hotel", async ({ page }) => {
   await page
     .locator('[name="country"]')
     .fill("This is a description for the Test Hotel");
-  await page.locator('[name="pricePerNight"]').fill("100");
-  await page.selectOption('select[name="starRating"]', "4");
+  await page.locator('[name="pricePerNight"]').fill("120");
+  await page.selectOption('select[name="starRating"]', "2");
 
   await page.getByText("Hiking Resort").click();
 
   await page.getByLabel("Free WiFi").check();
   await page.getByLabel("Airport Shuttle").check();
 
-  await page.locator('[name="adultCount"]').fill("2");
-  await page.locator('[name="childCount"]').fill("4");
+  await page.locator('[name="adultCount"]').fill("1");
+  await page.locator('[name="childCount"]').fill("0");
 
   await page.setInputFiles('[name="imageFiles"]', [
     path.join(__dirname, "files", "bobo-boutique1.jpeg"),
     path.join(__dirname, "files", "bobo-boutique2.jpeg"),
     path.join(__dirname, "files", "bobo-boutique3.jpeg"),
-    path.join(__dirname, "files", "bobo-boutique4.jpeg"),
   ]);
 
   await page.getByRole("button", { name: "Save" }).click();
