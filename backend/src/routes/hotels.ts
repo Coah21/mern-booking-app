@@ -4,6 +4,7 @@ import { BookingType, HotelSearchResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
 import Stripe from "stripe";
 import verifyToken from "../middleware/auth";
+import { error } from "console";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
@@ -53,6 +54,16 @@ router.get("/search", async (req: Request, res: Response) => {
   } catch (e) {
     console.log("error", e);
     res.status(500).json({ message: "Something went wrong" });
+  }
+});
+
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort("-lastUpdated");
+    res.json(hotels);
+  } catch (e) {
+    console.log("error", e);
+    res.status(500).json({ message: "Error fetching hotels" });
   }
 });
 

@@ -21,7 +21,7 @@ export type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
-  booking: BookingType[];
+  bookings: BookingType[];
 };
 
 export type BookingType = {
@@ -46,7 +46,7 @@ export type HotelSearchResponse = {
   };
 };
 
-export type paymentIntentResponse = {
+export type PaymentIntentResponse = {
   paymentIntentId: string;
   clientSecret: string;
   totalCost: number;
