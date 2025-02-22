@@ -4,7 +4,6 @@ import { BookingType, HotelSearchResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
 import Stripe from "stripe";
 import verifyToken from "../middleware/auth";
-import { error } from "console";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
@@ -39,7 +38,7 @@ router.get("/search", async (req: Request, res: Response) => {
       .skip(skip)
       .limit(pageSize);
 
-    const total = await Hotel.countDocuments();
+    const total = await Hotel.countDocuments(query);
 
     const response: HotelSearchResponse = {
       data: hotels,
@@ -106,6 +105,7 @@ router.post(
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCost * 100,
       currency: "usd",
+      automatic_payment_methods: { enabled: true },
       metadata: {
         hotelId,
         userId: req.userId,
